@@ -1,4 +1,4 @@
-package Socket;
+package server;
 
 public class Server {
 }
