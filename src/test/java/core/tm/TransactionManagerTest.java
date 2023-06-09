@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,7 +32,7 @@ public class TransactionManagerTest {
 
     @Test
     public void testThread(){
-        transMap = new ConcurrentHashMap<>();
+        transMap = new HashMap<>();
         tm = TransactionManager.create("/Users/ckf/IdeaProjects/ckf48_database/src/fileStore/xid/test/test");
         latch = new CountDownLatch(noWorkers);
         for (int i = 0; i < noWorkers; i++){
