@@ -1,8 +1,9 @@
-package core.dm.pageCache;
+package test.java.core.dm.pageCache;
 
 
-import core.dm.page.MockPage;
+import test.java.core.dm.page.MockPage;
 import core.dm.page.Page;
+import core.dm.pageCache.PageCache;
 
 
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class MockPageCache implements PageCache{
+public class MockPageCache implements PageCache {
     private Map<Integer, MockPage> cache = new HashMap<>();
     private Lock lock = new ReentrantLock();
     private AtomicInteger noPages = new AtomicInteger(0);

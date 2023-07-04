@@ -1,9 +1,11 @@
-package core.dm.page;
+package test.java.core.dm.page;
+
+import core.dm.page.Page;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class MockPage implements Page{
+public class MockPage implements Page {
     private int pgno;
     private byte[] data;
 

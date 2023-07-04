@@ -1,4 +1,4 @@
-package core.tm;
+package test.java.core.tm;
 
 import com.google.common.annotations.VisibleForTesting;
 import core.tm.TransactionManager;

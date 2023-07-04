@@ -1,4 +1,4 @@
-package core.common;
+package test.java.core.common;
 
 import exceptionUtil.Error;
 import exceptionUtil.ExceptionDealer;

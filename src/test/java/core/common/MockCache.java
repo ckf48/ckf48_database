@@ -1,6 +1,8 @@
-package core.common;
+package test.java.core.common;
 
-public class MockCache extends AbstractCache<Long>{
+import core.common.AbstractCache;
+
+public class MockCache extends AbstractCache<Long> {
     public MockCache() {
         super(50);
     }

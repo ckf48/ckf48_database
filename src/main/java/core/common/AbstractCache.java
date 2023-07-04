@@ -27,7 +27,7 @@ public abstract class AbstractCache<T> {
         lock = new ReentrantLock();
     }
 
-    protected T get(long key) throws Exception {
+    public T get(long key) throws Exception {
         while (true) {
             lock.lock();
             if (getting.containsKey(key)) {
@@ -85,7 +85,7 @@ public abstract class AbstractCache<T> {
     /**
      * 强行释放一个缓存
      */
-    protected void release(long key) {
+    public void release(long key) {
         lock.lock();
         try {
             int ref = references.get(key) - 1;
@@ -105,7 +105,7 @@ public abstract class AbstractCache<T> {
     /**
      * 关闭缓存，写回所有资源
      */
-    protected void close(){
+    public void close(){
         lock.lock();
         try{
             Set<Long> set = cache.keySet();
