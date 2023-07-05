@@ -32,9 +32,9 @@ public class LoggerImp implements Logger {
     private static final int OFFSET_CHECKSUM = OFFSET_SIZE + 4;
     private static final int OFFSET_DATA = OFFSET_CHECKSUM + 4;
 
-    private RandomAccessFile file;
-    private FileChannel fileChannel;
-    private Lock lock;
+    private final RandomAccessFile file;
+    private final FileChannel fileChannel;
+    private final Lock lock;
 
     private Long position;//指针位置
     private Long fileSize;
