@@ -24,13 +24,13 @@ public class TransactionManagerImp implements TransactionManager{
 
     static final String XID_SUFFIX = ".xid"; // XID 文件后缀
 
-    private RandomAccessFile file;
+    private final RandomAccessFile file;
 
-    private FileChannel fileChannel;
+    private final FileChannel fileChannel;
 
     private long xidCounter;
 
-    private Lock counterLock;
+    private final Lock counterLock;
     TransactionManagerImp(RandomAccessFile file, FileChannel fileChannel){
         this.file = file;
         this.fileChannel = fileChannel;
