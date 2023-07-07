@@ -6,15 +6,15 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class PageImp implements Page{
-    private int pageNumber;
+    private final int pageNumber;
 
-    private byte[] data;
+    private final byte[] data;
 
     private boolean dirty;
 
-    private Lock lock;
+    private final Lock lock;
 
-    private PageCache pageCache;
+    private final PageCache pageCache;
 
     public PageImp(int pageNumber, byte[] data, PageCache pageCache){
         this.pageNumber = pageNumber;

@@ -1,4 +1,4 @@
-package test.java.core.tm;
+package core.tm;
 
 public class tmTestRunner {
 }

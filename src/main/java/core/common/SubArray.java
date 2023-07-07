@@ -1,12 +1,12 @@
 package core.common;
 
 public class SubArray {
-    public byte[] raw;
+    public byte[] data;
     public int start;
     public int end;
 
-    public SubArray(byte[] raw, int start, int end) {
-        this.raw = raw;
+    public SubArray(byte[] data, int start, int end) {
+        this.data = data;
         this.start = start;
         this.end = end;
     }

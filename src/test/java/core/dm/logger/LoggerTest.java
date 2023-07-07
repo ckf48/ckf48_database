@@ -1,4 +1,4 @@
-package test.java.core.dm.logger;
+package core.dm.logger;
 
 import core.dm.logger.Logger;
 import org.junit.Test;

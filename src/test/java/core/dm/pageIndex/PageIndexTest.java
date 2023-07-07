@@ -1,4 +1,4 @@
-package test.java.core.dm.pageIndex;
+package core.dm.pageIndex;
 
 import core.dm.pageCache.PageCache;
 import core.dm.pageIndex.PageIndex;

@@ -1,7 +1,7 @@
-package test.java.core.dm.pageCache;
+package core.dm.pageCache;
 
 import core.dm.page.Page;
-import test.java.core.dm.pageCache.MockPageCache;
+import core.dm.pageCache.MockPageCache;
 import core.dm.pageCache.PageCache;
 import exceptionUtil.ExceptionDealer;
 import org.junit.Test;

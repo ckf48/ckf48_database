@@ -144,7 +144,7 @@ public class TransactionManagerImp implements TransactionManager{
     }
 
     @Override
-    public boolean isActivate(long xid) {
+    public boolean isActive(long xid) {
         if(xid == SUPER_XID) return false;
         return checkXID(xid,FIELD_TRAN_ACTIVE);
     }

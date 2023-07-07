@@ -1,7 +1,5 @@
-package test.java.core.tm;
+package core.tm;
 
-import com.google.common.annotations.VisibleForTesting;
-import core.tm.TransactionManager;
 import org.junit.Test;
 
 import java.io.File;
@@ -9,20 +7,17 @@ import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class TransactionManagerTest {
     static Random random = new SecureRandom();
     private int transCount = 0;
-    private int noWorkers = 50;
-    private int noWorks = 2000;
 
-    private Lock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
 
     private Map<Long,Byte> transMap;
 
@@ -34,6 +29,7 @@ public class TransactionManagerTest {
     public void testThread(){
         transMap = new HashMap<>();
         tm = TransactionManager.create("/Users/ckf/IdeaProjects/ckf48_database/src/fileStore/xid/test/test");
+        int noWorkers = 50;
         latch = new CountDownLatch(noWorkers);
         for (int i = 0; i < noWorkers; i++){
             Runnable r = this::worker;
@@ -52,6 +48,7 @@ public class TransactionManagerTest {
     private void worker(){
         boolean inTrans = false;
         long transXID = 0;
+        int noWorks = 2000;
         for(int i = 0; i < noWorks; i++){
             int op = Math.abs(random.nextInt(6));
             if(op == 0){
@@ -79,7 +76,7 @@ public class TransactionManagerTest {
                     byte status = transMap.get(xid);
                     boolean correct = false;
                     switch (status){
-                        case 0 -> correct = tm.isActivate(xid);
+                        case 0 -> correct = tm.isActive(xid);
                         case 1 -> correct = tm.isCommitted(xid);
                         case 2 -> correct = tm.isAborted(xid);
                     }

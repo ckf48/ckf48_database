@@ -1,7 +1,7 @@
-package test.java.core.dm.pageCache;
+package core.dm.pageCache;
 
 
-import test.java.core.dm.page.MockPage;
+import core.dm.page.MockPage;
 import core.dm.page.Page;
 import core.dm.pageCache.PageCache;
 

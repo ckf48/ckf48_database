@@ -17,13 +17,13 @@ import java.util.concurrent.locks.ReentrantLock;
 public class PageCacheImp extends AbstractCache<Page> implements PageCache {
 
     private static final int MEM_MIN_LIM = 10;
-    private RandomAccessFile file;
+    private final RandomAccessFile file;
 
-    private FileChannel fileChannel;
+    private final FileChannel fileChannel;
 
-    private Lock lock;
+    private final Lock lock;
 
-    private AtomicInteger pageNumbers;
+    private final AtomicInteger pageNumbers;
 
     public PageCacheImp(RandomAccessFile file, FileChannel fileChannel, int maxResource) {
         super(maxResource);

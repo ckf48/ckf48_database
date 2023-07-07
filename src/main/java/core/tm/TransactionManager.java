@@ -15,7 +15,7 @@ public interface TransactionManager {
 
     void abort(long xid);   // 取消一个事务
 
-    boolean isActivate(long xid);   // 查询一个事务的状态是否是正在进行
+    boolean isActive(long xid);   // 查询一个事务的状态是否是正在进行
 
     boolean isCommitted(long xid);  // 查询一个事务的状态是否是已提交
 
