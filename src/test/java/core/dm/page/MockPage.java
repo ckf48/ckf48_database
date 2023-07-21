@@ -1,4 +1,4 @@
-package core.dm.page;
+package test.java.core.dm.page;
 
 import core.dm.page.Page;
 

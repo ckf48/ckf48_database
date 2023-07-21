@@ -1,9 +1,10 @@
-package core.dm.pageCache;
+package test.java.core.dm.pageCache;
 
 
-import core.dm.page.MockPage;
+import test.java.core.dm.page.MockPage;
 import core.dm.page.Page;
 import core.dm.pageCache.PageCache;
+import test.java.core.dm.page.MockPage;
 
 
 import java.util.HashMap;

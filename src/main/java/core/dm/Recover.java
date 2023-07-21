@@ -40,6 +40,43 @@ public class Recover {
         byte[] newData;
     }
 
+    public static void recover(TransactionManager tm,Logger logger, PageCache pc){
+        System.out.println("Recovering...");
+        logger.rewind();
+        int maxPgno = 0;
+        while(true){
+            byte[] log = logger.next();
+            if(log == null){
+                break;
+            }
+            int pgno;
+            if(isInsertLog(log)){
+                InsertLog insertLog = parseInsertLog(log);
+                pgno = insertLog.pgno;
+            }else{
+                UpdateLog updateLog = parseUpdateLog(log);
+                pgno = updateLog.pgno;
+            }
+            if(pgno > maxPgno){
+                maxPgno = pgno;
+            }
+        }
+
+        if(maxPgno == 0){
+            maxPgno = 1;
+        }
+
+        pc.truncateByBgno(maxPgno);
+        System.out.println("Truncate to " + maxPgno + " pages.");
+
+        redoTransactions(tm,logger,pc);
+        System.out.println("Redo Transactions Over.");
+
+        undoTransactions(tm,logger,pc);
+        System.out.println("Undo Transactions Over.");
+        System.out.println("Recovery Over.");
+    }
+
     private static void redoTransactions(TransactionManager tm, Logger logger, PageCache pageCache) {
         logger.rewind();
         while (true) {
