@@ -14,5 +14,7 @@ public class Error {
     public static final Exception DataTooLargeException = new RuntimeException("Data too large!");
     public static final Exception DatabaseTooBusyException = new RuntimeException("Database too busy!");
     public static final Exception BadLogFileException = new RuntimeException("Bad log file!");
+    //vm
+    public static final Exception DeadLockException = new RuntimeException("Dead lock!");
 
 }

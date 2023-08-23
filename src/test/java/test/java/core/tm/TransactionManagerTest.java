@@ -1,5 +1,6 @@
-package core.tm;
+package test.java.core.tm;
 
+import core.tm.TransactionManager;
 import org.junit.Test;
 
 import java.io.File;

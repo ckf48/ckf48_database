@@ -24,11 +24,11 @@ import java.util.concurrent.locks.ReentrantLock;
 import static org.junit.Assert.*;
 
 public class DataManagerTest {
-    static List<Long> uids0,uids1;
+    static List<Long> uids0, uids1;
     static Lock lock;
     static Random random = new SecureRandom();
 
-    private void initUids(){
+    private void initUids() {
         uids0 = new ArrayList<>();
         uids1 = new ArrayList<>();
         lock = new ReentrantLock();
@@ -38,20 +38,20 @@ public class DataManagerTest {
     private void worker(DataManager dm0, DataManager dm1, int taskNum, int insertRation, CountDownLatch cdl) throws Exception {
         int dataLen = 60;
         try {
-            for(int i = 0; i < taskNum; i++){
+            for (int i = 0; i < taskNum; i++) {
                 int op = Math.abs(random.nextInt()) % 100;
-                if(op < insertRation){
+                if (op < insertRation) {
                     byte[] data = RandomUtil.randomBytes(dataLen);
                     long u0 = 0;
                     long u1 = 0;
                     try {
-                        u0 = dm0.insert(0,data);
+                        u0 = dm0.insert(0, data);
                     } catch (Exception e) {
                         continue;
                     }
 
-                    try{
-                        u1 = dm1.insert(0,data);
+                    try {
+                        u1 = dm1.insert(0, data);
                     } catch (Exception e) {
                         ExceptionDealer.shutDown(e);
                     }
@@ -61,9 +61,9 @@ public class DataManagerTest {
                     uids1.add(u1);
                     lock.unlock();
 
-                }else {
+                } else {
                     lock.lock();
-                    if(uids0.size() == 0){
+                    if (uids0.size() == 0) {
                         lock.unlock();
                         continue;
                     }
@@ -80,15 +80,15 @@ public class DataManagerTest {
                     data1.rlock();
                     SubArray s0 = data0.data();
                     SubArray s1 = data1.data();
-                    assertArrayEquals(Arrays.copyOfRange(s0.data,s0.start,s0.end),Arrays.copyOfRange(s1.data,s1.start,s1.end));
+                    assertArrayEquals(Arrays.copyOfRange(s0.data, s0.start, s0.end), Arrays.copyOfRange(s1.data, s1.start, s1.end));
                     data0.rUnlock();
                     data1.rUnlock();
 
                     byte[] newData = RandomUtil.randomBytes(dataLen);
                     data0.before();
                     data1.before();
-                    System.arraycopy(newData,0,s0.data,s0.start,dataLen);
-                    System.arraycopy(newData,0,s1.data,s1.start,dataLen);
+                    System.arraycopy(newData, 0, s0.data, s0.start, dataLen);
+                    System.arraycopy(newData, 0, s1.data, s1.start, dataLen);
                     data0.after(0);
                     data1.after(0);
                     data0.release();
@@ -97,21 +97,22 @@ public class DataManagerTest {
 
                 }
             }
-        }finally {
+        } finally {
             cdl.countDown();
         }
     }
+
     @Test
-    public void testSingle() throws Exception{
+    public void testSingle() throws Exception {
         TransactionManager tm = new MockTransactionManager();
-        DataManager dm0 = DataManager.create("/Users/ckf/IdeaProjects/ckf48_database/src/fileStore/testDMSingle", PageCache.PAGE_SIZE * 10,tm);
+        DataManager dm0 = DataManager.create("/Users/ckf/IdeaProjects/ckf48_database/src/fileStore/testDMSingle", PageCache.PAGE_SIZE * 10, tm);
         DataManager dm1 = MockDataManager.newMockDataManager();
         int taskNum = 10000;
         CountDownLatch cdl = new CountDownLatch(1);
         initUids();
-        Runnable r = ()-> {
+        Runnable r = () -> {
             try {
-                worker(dm0,dm1,taskNum,50,cdl);
+                worker(dm0, dm1, taskNum, 50, cdl);
             } catch (Exception e) {
                 ExceptionDealer.shutDown(e);
             }
@@ -129,15 +130,15 @@ public class DataManagerTest {
     @Test
     public void testMulti() throws InterruptedException {
         TransactionManager tm = new MockTransactionManager();
-        DataManager dm0 = DataManager.create("/Users/ckf/IdeaProjects/ckf48_database/src/fileStore/testDMMulti", PageCache.PAGE_SIZE * 100,tm);
+        DataManager dm0 = DataManager.create("/Users/ckf/IdeaProjects/ckf48_database/src/fileStore/testDMMulti", PageCache.PAGE_SIZE * 100, tm);
         DataManager dm1 = MockDataManager.newMockDataManager();
         int taskNum = 500;
         CountDownLatch cdl = new CountDownLatch(10);
         initUids();
-        for(int i = 0; i < 10; i++){
-            Runnable r = ()-> {
+        for (int i = 0; i < 10; i++) {
+            Runnable r = () -> {
                 try {
-                    worker(dm0,dm1,taskNum,50,cdl);
+                    worker(dm0, dm1, taskNum, 50, cdl);
 
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -157,20 +158,20 @@ public class DataManagerTest {
     @Test
     public void testRecoverSimple() throws InterruptedException {
         TransactionManager tm = TransactionManager.create("/Users/ckf/IdeaProjects/ckf48_database/src/fileStore/testRecover");
-        DataManager dm0 = DataManager.create("/Users/ckf/IdeaProjects/ckf48_database/src/fileStore/testRecover",PageCache.PAGE_SIZE * 30,tm);
+        DataManager dm0 = DataManager.create("/Users/ckf/IdeaProjects/ckf48_database/src/fileStore/testRecover", PageCache.PAGE_SIZE * 30, tm);
         DataManager dm1 = MockDataManager.newMockDataManager();
         dm0.close();
 
         initUids();
         int workNums = 10;
-        for(int i = 0; i < 8; i++){
-            dm0 = DataManager.open("/Users/ckf/IdeaProjects/ckf48_database/src/fileStore/testRecover",PageCache.PAGE_SIZE * 30,tm);
+        for (int i = 0; i < 8; i++) {
+            dm0 = DataManager.open("/Users/ckf/IdeaProjects/ckf48_database/src/fileStore/testRecover", PageCache.PAGE_SIZE * 30, tm);
             CountDownLatch cdl = new CountDownLatch(workNums);
-            for(int j = 0; j < workNums; j++){
+            for (int j = 0; j < workNums; j++) {
                 final DataManager dm = dm0;
-                Runnable r = ()-> {
+                Runnable r = () -> {
                     try {
-                        worker(dm,dm1,100,50,cdl);
+                        worker(dm, dm1, 100, 50, cdl);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

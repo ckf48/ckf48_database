@@ -20,13 +20,13 @@ public class DataItemImp implements DataItem {
     public static final int OFFSET_SIZE = OFFSET_VALID + 1;
     public static final int OFFSET_DATA = OFFSET_SIZE + 2;
 
-    private SubArray data;
-    private byte[] oldData;
-    private Lock rLock;
-    private Lock wLock;
-    private DataManagerImp dm;
-    private long uid;
-    private Page page;
+    private final SubArray data;
+    private final byte[] oldData;
+    private final Lock rLock;
+    private final Lock wLock;
+    private final DataManagerImp dm;
+    private final long uid;
+    private final Page page;
 
     public DataItemImp(SubArray data, byte[] oldData, Page page, long uid, DataManagerImp dm) {
         ReadWriteLock lock = new ReentrantReadWriteLock();
